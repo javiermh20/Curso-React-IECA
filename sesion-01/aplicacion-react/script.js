@@ -12,15 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const changeStatus = (item) => {
-    render();
     item.completed = !item.completed;
+    render();
   };
 
   const deleteItem = (item) => {
     const index = items.indexOf(item);
     items.splice(index, 1);
     render();
-  }
+  };
 
   const render = () => {
     const h1 = React.createElement(
@@ -30,11 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
         className: "x-1",
         style: {
           color: "red",
-          backgroundColor: "yellow",
+          backgroundColor: "blue",
           borderRadius: "5px",
         },
       },
-      "Mi primera aplicación en React"
+      "Mi primera aplicación React"
     );
 
     const form = React.createElement("div", null, [
