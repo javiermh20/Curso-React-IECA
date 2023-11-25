@@ -1,12 +1,22 @@
+import React from "react";
+import { FaShoppingCart } from "react-icons/fa"; // Asegúrate de tener FontAwesome instalado
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
-    <nav className="bg-black p-4 w-full flex justify-center">
-        <div className="container flex justify-between items-center text-white p-4">
-            <h1 className="text-xl">FakeStore</h1>
-            <span>Carrito</span>
+    <nav className="bg-blue-900 p-4 w-full">
+      <div className="container flex justify-between items-center text-white">
+        <Link to="/">
+          <h1 className="text-xl font-bold">FakeStore</h1>
+        </Link>
+        <div className="flex items-center">
+          <Link to="/cart" className="mr-4">
+            <FaShoppingCart className="text-2xl" />
+          </Link>
         </div>
+      </div>
     </nav>
   );
-}; 
+};
 
 export default Navbar;

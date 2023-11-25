@@ -8,7 +8,7 @@ export const useFakestoreApi = () => {
     const [loading, setLoading] = useState(false);
 
     const fetchData = async (url, action) => {
-       const result = await axios.get(url)
+       const result = await  axios.get(url)
        return result.data;
     };
 
