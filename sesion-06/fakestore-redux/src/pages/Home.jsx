@@ -3,6 +3,7 @@ import { useFakestoreApi } from "../hooks/useFakestoreApi";
 import ProductItem from "../components/ProductItem";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { createSelector } from 'reselect';
 
 const Home = () => {
   const { data: products, loading, error, getProducts } = useFakestoreApi();
@@ -16,11 +17,21 @@ const Home = () => {
     setSearchTerm(e.target.value);
   };
 
+  // Selector sin memoización
+  const cartSelector = (state) => state.cart.map((product) => product.id);
+
+  // Selector memoizado
+  const memoizedCartSelector = createSelector(
+    [(state) => state.cart],
+    (cart) => cart.map((product) => product.id)
+  );
+
+  // Uso en el componente
+  const cartProductIds = useSelector(memoizedCartSelector);
+
   const filteredProducts = products?.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
-  const cartProductIds = useSelector((state) => state.cart.map((product) => product.id));
 
   return (
     <div className="text-black">
@@ -39,14 +50,14 @@ const Home = () => {
           </div>
           <h1 className="text-3xl font-bold mb-4">Productos</h1>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-              {filteredProducts.map((product) => (
-                <ProductItem
-                  key={product.id}
-                  product={product}
-                  isInCart={cartProductIds.includes(product.id)}
-                />
-              ))}
-            </ul>
+            {filteredProducts.map((product) => (
+              <ProductItem
+                key={product.id}
+                product={product}
+                isInCart={cartProductIds.includes(product.id)}
+              />
+            ))}
+          </ul>
         </div>
       )}
     </div>
