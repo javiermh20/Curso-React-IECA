@@ -7,6 +7,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Auth from "./hoc/Auth";
 import Resctricted from "./pages/auth/Restricted";
+import NewProduct from "./pages/auth/NewProduct";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route element={<Auth><Outlet /></Auth> }>
                    <Route path="/restricted" element={<Resctricted />} />
+                   <Route path="/new-product" element={<NewProduct />} />
                 </Route>
               </Routes>
             </div>

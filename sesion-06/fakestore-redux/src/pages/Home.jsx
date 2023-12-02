@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFakestoreApi } from "../hooks/useFakestoreApi";
 import ProductItem from "../components/ProductItem";
 import { FaSearch } from "react-icons/fa";
@@ -41,7 +41,7 @@ const Home = () => {
   );
 
   return (
-    <div className="text-black">
+    <div className="text-black mx-4 md:mx-8 lg:mx-16 xl:mx-20">
       {loading && <p>Cargando...</p>}
       {error && <p>Hubo un error</p>}
       {products && (
@@ -56,7 +56,7 @@ const Home = () => {
             <FaSearch className="inline-block ml-2 text-gray-500" />
           </div>
           <h1 className="text-3xl font-bold mb-4">Productos</h1>
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
             {filteredProducts.map((product) => (
               <ProductItem
                 key={product.id}

@@ -26,26 +26,34 @@ const Navbar = () => {
     <nav className="bg-blue-700 p-4">
       <div className="container flex justify-between items-center text-white">
         <div className="flex items-center">
-          <Link to="/" className="text-xl font-bold mr-4 hover:bg-blue-500 rounded-md p-2">
+          {/* Título que se muestra en dispositivos grandes (lg y superiores) */}
+          <Link
+            to="/"
+            className="font-bold mr-4 hover:bg-blue-500 rounded-md p-2"
+          >
             FakeStore
           </Link>
         </div>
         <div className="flex items-center">
+          {/* Icono del carrito y contador (muestra en todos los dispositivos) */}
           <div className="flex items-center mr-6">
             <Link to="/cart" className="mr-2 hover:bg-blue-500 rounded-md p-2">
               <FaShoppingCart className="text-2xl" />
             </Link>
             {cartIndicator}
           </div>
+          {/* Menú de inicio de sesión y cierre de sesión */}
           {!user ? (
             <div className="flex items-center rounded-md hover:bg-blue-500 p-2">
-              <Link to="/login">Iniciar Sesión</Link>
+              <Link to="/login">SingIn</Link>
             </div>
           ) : (
             <div className="flex items-center mr-4">
-              <span className="mr-2 hover:bg-blue-500 rounded-md p-2">{user.email}</span>
+              <span className="mr-2 hover:bg-blue-500 rounded-md p-2 hidden lg:block">
+                {user.email}
+              </span>
               <div className="flex items-center hover:bg-red-500 rounded-md p-2">
-                <button onClick={handleLogout}>Cerrar Sesión</button>
+                <button onClick={handleLogout}>Logout</button>
               </div>
             </div>
           )}
