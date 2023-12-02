@@ -26,24 +26,24 @@ const Navbar = () => {
     <nav className="bg-blue-700 p-4">
       <div className="container flex justify-between items-center text-white">
         <div className="flex items-center">
-          <Link to="/" className="text-xl font-bold mr-4">
+          <Link to="/" className="text-xl font-bold mr-4 hover:bg-blue-500 rounded-md p-2">
             FakeStore
           </Link>
         </div>
         <div className="flex items-center">
           <div className="flex items-center mr-6">
-            <Link to="/cart" className="mr-2">
+            <Link to="/cart" className="mr-2 hover:bg-blue-500 rounded-md p-2">
               <FaShoppingCart className="text-2xl" />
             </Link>
             {cartIndicator}
           </div>
           {!user ? (
-            <div className="flex items-center rounded-md hover:bg-green-700 p-2">
+            <div className="flex items-center rounded-md hover:bg-blue-500 p-2">
               <Link to="/login">Iniciar Sesión</Link>
             </div>
           ) : (
             <div className="flex items-center mr-4">
-              <span className="mr-2">{user.email}</span>
+              <span className="mr-2 hover:bg-blue-500 rounded-md p-2">{user.email}</span>
               <div className="flex items-center hover:bg-red-500 rounded-md p-2">
                 <button onClick={handleLogout}>Cerrar Sesión</button>
               </div>

@@ -16,7 +16,7 @@ export const useLogin = () => {
    }, []);
 
    const login = async (email, password) => {
-      try {
+      try { 
          const res = await signInWithEmailAndPassword(
             auth,
             email,

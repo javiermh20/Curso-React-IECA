@@ -3,31 +3,38 @@ import { useFakestoreApi } from "../hooks/useFakestoreApi";
 import ProductItem from "../components/ProductItem";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 const Home = () => {
   const { data: products, loading, error, getProducts } = useFakestoreApi();
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    getProducts();
+    const get = async () => {
+      const unsubscribe = await getProducts();
+      return () => {
+        if (typeof unsubscribe === "function") {
+          unsubscribe();
+        }
+      };
+    };
+    get();
   }, []);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  // Selector sin memoización
+  // Selector sin memorización
   const cartSelector = (state) => state.cart.map((product) => product.id);
 
   // Selector memoizado
-  const memoizedCartSelector = createSelector(
-    [(state) => state.cart],
-    (cart) => cart.map((product) => product.id)
+  const memorizedCartSelector = createSelector([(state) => state.cart], (cart) =>
+    cart.map((product) => product.id)
   );
 
   // Uso en el componente
-  const cartProductIds = useSelector(memoizedCartSelector);
+  const cartProductIds = useSelector(memorizedCartSelector);
 
   const filteredProducts = products?.filter((product) =>
     product.title.toLowerCase().includes(searchTerm.toLowerCase())

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductItem from "../components/ProductItem";
 import { useSelector } from "react-redux";
 
@@ -7,14 +7,18 @@ const Cart = () => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    setTotal(
-      cart.reduce((acc, product) => acc + product.price, 0).toFixed(2)
-    );
+    const calculateTotal = () => {
+      const cartTotal = cart.reduce((acc, product) => acc + parseFloat(product.price), 0);
+      setTotal(cartTotal.toFixed(2));
+    };
+
+    calculateTotal();
   }, [cart]);
 
   return (
     <div className="flex flex-col gap-4 text-black">
       <h1 className="text-2xl font-bold">Carrito</h1>
+
       {cart.length === 0 ? (
         <p>El carrito está vacío.</p>
       ) : (
