@@ -1,4 +1,4 @@
-import { onSnapshot, query, collection, doc } from "firebase/firestore";
+import { onSnapshot, query, collection, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "../main";
 
@@ -9,38 +9,43 @@ export const useChatsApi = () => {
 
     // Obtener los chats
     const getChats = async () => {
+        setLoading(true);
         try {
             const chatsQuery = query(collection(db, "chats"));
-
-            return onSnapshot(chatsQuery, (querySnapshot) => {
+            const unsubscribe = onSnapshot(chatsQuery, (querySnapshot) => {
                 setData(querySnapshot.docs.map(
                     (doc) => ({ id: doc.id, ...doc.data() })
                 ));
             });
+            return unsubscribe;
         } catch (error) {
             setError("Error al obtener los chats");
         } finally {
             setLoading(false);
+            setError(null);
         }
     };
 
-    // Obtener mensajes para un chat específico
-    const getMessagesForChat = async (chatId) => {
+    // Agregar un chat
+    const addChat = async (chatName) => {
         try {
-            const messagesQuery = query(collection(db, "chats", chatId, "messages"));
-
-            return onSnapshot(messagesQuery, (querySnapshot) => {
-                // Puedes manejar los mensajes aquí
-                setData(querySnapshot.docs.map(
-                    (doc) => ({ id: doc.id, ...doc.data() })
-                ));
+            const newChatRef = await addDoc(collection(db, "chats"), {
+                name: chatName,
             });
+            return newChatRef.id;
         } catch (error) {
-            setError("Error al obtener los mensajes del chat");
-        } finally {
-            setLoading(false);
+            setError("Error al agregar el chat");
         }
     };
 
-    return { data, error, loading, getChats, getMessagesForChat };
+    // eliminar un chat
+    const deleteChat = async (chat) => {
+        try {
+            await deleteDoc(doc(db, "chats", chat.id));
+        } catch (error) {
+            setError(error);
+        }
+    };
+
+    return { data, error, loading, getChats, addChat, deleteChat };
 };

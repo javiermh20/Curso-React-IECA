@@ -8,10 +8,10 @@ import IndividualChat from "./components/IndividualChat";
 function App() {
   return (
     <BrowserRouter>
-      <main className="min-h-screen min-w-screen bg-gray-100 flex flex-col">
+      <main>
         <Navbar />
-        <div className="w-full flex justify-center">
-          <div className="container flex text-white p-4">
+        <div>
+          <div>
             <Routes>
               <Route path="/" element={<Login />} />
               <Route

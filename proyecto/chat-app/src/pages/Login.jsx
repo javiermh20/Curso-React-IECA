@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -14,7 +15,7 @@ const Login = () => {
 
   if (loadingSession) return <p>Cargando...</p>;
 
-  if (!loadingSession && user){
+  if (!loadingSession && user) {
     return <Navigate to="/" replace={true}></Navigate>;
   }
 
@@ -29,7 +30,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await login(form.email, form.password);
+      await login(form.email, form.password);
       navigate("/home");
     } catch (error) {
       setError(error.message);
@@ -37,39 +38,31 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="bg-gray-100 rounded p-8 w-full sm:w-96 text-black">
-        <h1 className="text-2xl font-bold mb-4">Iniciar Sesión</h1>
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-semibold">
-              Email
-            </label>
-            <input
-              className="border border-gray-300 rounded p-2"
-              type="email"
-              name="email"
-              id="email"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="password" className="text-sm font-semibold">
-              Contraseña
-            </label>
-            <input
-              className="border border-gray-300 rounded p-2"
-              type="password"
-              name="password"
-              id="password"
-              onChange={handleChange}
-            />
-          </div>
-          <button className="bg-blue-500 text-white rounded p-2 hover:bg-blue-600 transition">
-            Iniciar Sesión
-          </button>
-        </form>
-        {error ? <span className="text-red-500 mt-2">{error}</span> : null}
+    <div
+      className="flex items-center justify-center min-h-screen text-indigo-800"
+      style={{
+        backgroundImage: `url('https://img.freepik.com/vector-gratis/fondo-manchas-abstractas-coloridas-acuarela_23-2148209190.jpg?w=2000&t=st=1701675128~exp=1701675728~hmac=441d401eef45ad3ed9a00ebb53adf405ec7cdc388ac00f08ffd9d2c7ce0293b7')`,
+        backgroundSize: "cover",
+      }}
+    >
+      <div
+        className="bg-white p-8 rounded-lg shadow-md max-w-md w-full md:w-2/3 sm:w-3/4 lg:w-1/2"
+        style={{
+          backdropFilter: "blur(10px)",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
+        }}
+      >
+        <h1 className="text-4xl font-bold mb-4 text-center">Iniciar Sesión</h1>
+        <LoginForm
+          form={form}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+        />
+        {error && (
+          <span className="text-red-500 mt-2 block text-center">
+            {error}
+          </span>
+        )}
       </div>
     </div>
   );

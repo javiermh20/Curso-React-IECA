@@ -16,9 +16,10 @@ const IndividualChat = ({ chat }) => {
       const newMessages = querySnapshot.docs.map((doc) => doc.data());
       setMessages(newMessages);
     });
-
+  
     return () => unsubscribe();
   }, [orderedMessagesQuery]);
+  
 
   const sendMessage = async (newMessage) => {
     await addDoc(messagesRef, {
@@ -29,9 +30,9 @@ const IndividualChat = ({ chat }) => {
   };
 
   return (
-    <div className="individual-chat bg-white p-4 rounded-md shadow-md">
-      <div className="chat-header text-2xl font-bold mb-2">{chat.name}</div>
-      <div className="chat-messages max-h-96 overflow-y-auto">
+    <div className="bg-white p-4">
+      <div className="text-2xl font-bold mb-2">{chat.name}</div>
+      <div className="max-h-96 overflow-y-auto">
         {messages.map((msg, index) => (
           <MessageBubble
             key={index}
