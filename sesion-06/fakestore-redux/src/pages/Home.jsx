@@ -28,7 +28,7 @@ const Home = () => {
   // Selector sin memorización
   const cartSelector = (state) => state.cart.map((product) => product.id);
 
-  // Selector memoizado
+  // Selector memorizado
   const memorizedCartSelector = createSelector([(state) => state.cart], (cart) =>
     cart.map((product) => product.id)
   );
